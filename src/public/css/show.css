@@ -1,0 +1,193 @@
+:root {
+    --bg: #f7f7f7;
+    --text: #333;
+    --muted: #9aa0a6;
+    --line: #e5e7eb;
+    --white: #fff;
+    --brand: #f6c000;
+    --danger: #e11d48;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", "Meiryo", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 36px auto 96px;
+    padding: 0 24px;
+}
+
+.back-link {
+    display: inline-block;
+    color: #0b72d2;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.back-link:hover {
+    text-decoration: underline
+}
+
+
+.product-detail {
+    display: grid;
+    grid-template-columns: 520px minmax(0, 1fr);
+    gap: 24px 48px;
+    align-items: start;
+}
+
+/* ===== Left (image) ===== */
+.product-image {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .05);
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.product-image p {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* ===== Right (form) ===== */
+.product-info {
+    background: transparent;
+}
+
+.form-group {
+    margin: 18px 0
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--white);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.form-control:focus {
+    border-color: #c9ced6;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, .03);
+}
+
+textarea.form-control {
+    min-height: 180px;
+    resize: vertical
+}
+
+.form__error {
+    margin-top: 8px;
+    color: var(--danger);
+    font-size: 13px;
+}
+
+/* ===== Seasons (checkboxes styled like radios) ===== */
+.seasons {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.seasons-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+}
+
+.seasons-radio input {
+    width: 18px;
+    height: 18px;
+    accent-color: #3b82f6;
+}
+
+
+.actions {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 22px;
+}
+
+.btn {
+    min-width: 220px;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
+    transition: filter .12s, transform .02s;
+}
+
+.btn:hover {
+    filter: brightness(1.02)
+}
+
+.btn:active {
+    transform: translateY(1px)
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.btn-primary {
+    background: var(--brand);
+    color: #1f1f1f;
+}
+
+.btn-danger {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+
+.product-detail>form:last-of-type {
+    margin-top: 12px;
+    margin-left: auto;
+}
+
