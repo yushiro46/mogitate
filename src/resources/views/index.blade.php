@@ -69,7 +69,7 @@
             </div>
 
             <div class="pagination">
-                {{ $product->links('pagination::default') }}
+                {{ $products->links('pagination::default') }}
             </div>
         </section>
     </main>
