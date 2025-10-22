@@ -1,6 +1,7 @@
 # mogitate
 
 ## 環境構築
+
 cd coachtech/laravel
 
 git clone git@github.com:Estra-Coachtech/laravel-docker-template.git
@@ -31,7 +32,6 @@ php artisan make:migration create_seasons_table
 
 php artisan make:migration create_product_season_table
 
-
 php artisan migrate
 
 php artisan make:seeder ProductsTableSeeder
@@ -45,12 +45,13 @@ php artisan db:seed
 php artisan key:generate
 
 ## 使用技術
+
 PHP8.x/Laravel8.75
 
-## ER図
-![ER図][def]
-[def]: er-diagram.png
+## ER 図
+
+![ER図](er-diagram.png)
 
 ## URL
-ローカル環境　http://localhost/products
 
+ローカル環境　 http://localhost/products
