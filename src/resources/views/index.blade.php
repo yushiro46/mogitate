@@ -29,8 +29,8 @@
                 <h3>価格順で表示</h3>
                 <select name="sort" class="sort-select" onchange="this.form.submit()">
                     <option value="">価格で並べ替え</option>
-                    <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>安い順</option>
-                    <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順</option>
+                    <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>安い順に表示</option>
+                    <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順に表示</option>
                 </select>
             </form>
 

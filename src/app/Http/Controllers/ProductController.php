@@ -46,24 +46,43 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request, $productId)
     {
+        // 対象の商品を取得（存在しなければ404エラー）
         $product = Product::findOrFail($productId);
 
-        $data = $request->only(['name', 'price', 'description']);
-
+        // 新しい画像がアップロードされた場合のみ処理
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $newName = $image->getClientOriginalName();
+            $newName = $image->getClientOriginalName(); // 元のファイル名を取得
+
+            // 古い画像が存在していれば削除
+            $oldPath = public_path('fruits-img/' . $product->image);
+            if ($product->image && file_exists($oldPath)) {
+                unlink($oldPath);
+            }
+
+            // 新しい画像を public/fruits-img に保存
             $image->move(public_path('fruits-img'), $newName);
-            $date['image'] = $newName;
+
+            // データベースに保存するファイル名を更新
+            $product->image = $newName;
         }
 
-        $product->update($data);
+        // 画像が未選択の場合はそのまま（何もしない）
 
+        // 基本情報を更新
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->description = $request->input('description');
+        $product->save();
+
+        // 季節（seasons[]）を中間テーブルで同期
         $seasonIds = $request->input('seasons', []);
         $product->seasons()->sync($seasonIds);
 
+        // 一覧ページにリダイレクト
         return redirect('/products');
     }
+
 
     public function destroy($productId)
     {
@@ -80,14 +99,24 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $imageName = null;
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = $image->getClientOriginalName();
 
+            // ✅ 保存先を「public/fruits-img」に変更
             $destination = public_path('fruits-img');
+
+            // フォルダが存在しなければ作成
+            if (!file_exists($destination)) {
+                mkdir($destination, 0777, true);
+            }
+
+            // 画像を移動
             $image->move($destination, $imageName);
         }
 
+        // 商品登録
         $product = Product::create([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
@@ -98,6 +127,7 @@ class ProductController extends Controller
         if ($request->filled('seasons')) {
             $product->seasons()->sync($request->input('seasons'));
         }
+
         return redirect('/products');
     }
 }

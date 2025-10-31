@@ -23,21 +23,29 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
+        // HTTPメソッドを判定
         $isCreate = $this->isMethod('post');
-        $isUpdate = $this->Method('patch') || $this->isMethod('put');
+        $isUpdate = $this->isMethod('patch') || $this->isMethod('put');
 
-        return [
-            'name' => ['required'],
-            'price' => ['required', 'integer', 'min:0', 'max:10000'],
-            'image' => $isCreate
-                ? ['required', 'mimes:jpeg,png']
-                : ['nullable', 'mimes:jpeg,png'],
-            'description' => ['required', 'max:120'],
-            'seasons' => $isCreate
-                ? ['required', 'array']
-                : ['sometimes', 'array'],
-            'seasons.*' => ['integer'],
+        // 共通ルール
+        $rules = [
+            'name' => 'required|string|max:255',
+            'price' => 'required|integer|between:0,10000',
+            'description' => 'required|max:120',
+            'seasons' => 'required|array', // ✅ name="seasons[]" に対応
         ];
+
+        // 新規登録時は画像が必須
+        if ($isCreate) {
+            $rules['image'] = 'required|image|mimes:png,jpeg';
+        }
+
+        // 更新時は画像は任意
+        if ($isUpdate) {
+            $rules['image'] = 'nullable|image|mimes:png,jpeg';
+        }
+
+        return $rules;
     }
 
     public function messages()
@@ -46,15 +54,15 @@ class ProductRequest extends FormRequest
             'name.required' => '商品名を入力してください',
             'price.required' => '値段を入力してください',
             'price.integer' => '数値で入力してください',
-            'price.min' => '価格は０円以上で入力してください',
-            'price.max' => '価格は１００００円以内で入力してください',
-            'image.required' => '商品画像を登録しください',
-            'image.mimes' => '画像は .jpeg または .png 形式でアップロードしてください',
+            'price.between' => '0~10000円以内で入力してください',
+
+            'image.required' => '商品画像を登録してください',
+            'image.image' => '画像ファイルを選択してください',
+            'image.mimes' => '「.png」 または 「.jpeg」 形式でアップロードしてください',
+
+            'seasons.required' => '季節を選択してください',
             'description.required' => '商品説明を入力してください',
             'description.max' => '120文字以内で入力してください',
-            'seasons.required' => '季節を選択してください',
-            'seasons.array' => '季節の選択が正しくありません',
-
         ];
     }
 }

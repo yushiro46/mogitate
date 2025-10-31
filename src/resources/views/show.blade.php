@@ -52,9 +52,6 @@
                 <div class="form-group">
                     <label for="image">商品画像</label>
                     <input id="image" type="file" name="image" accept="image/*" class="form-control">
-                    @if ($product->image)
-                    <p>現在のファイル名 :<strong>{{ $product->image }}</strong></p>
-                    @endif
 
                     <div class="form__error">
                         @error('image')
